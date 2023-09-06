@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 # 6-print_comb3.py
 
-for digit i in range(0, 10):
-    for digit j in range(digit i + 1, 10):
-        if digit i == 8 and digit j == 9:
-            print("{}{}".format(digit i, digit j))
+for digiti in range(0, 10):
+    for digitj in range(digiti + 1, 10):
+        if digiti == 8 and digitj == 9:
+            print("{}{}".format(digiti, digitj))
         else:
-            print("{}{}".format(digit i, digit j), end=", ")
+            print("{}{}".format(digiti, digitj), end=", ")
