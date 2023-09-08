@@ -1,8 +1,8 @@
-!/usr/bin/python3
-
+#!/usr/bin/python3
+# 102-magic_calculation.py
 
 def magic_calculation(a, b):
-    """Match bytecodethat was provided bythe alx Holberton School."""
+    """Match bytecode provided by Holberton School."""
     from magic_calculation_102 import add, sub
 
     if a < b:
