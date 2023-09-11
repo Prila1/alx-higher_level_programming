@@ -1,58 +1,70 @@
 #include "lists.h"
+#include <stdio.h>
 
-listint_t *reverse_listint(listint_t **head);
-int is_palindrome(listint_t **head);
-
-listint_t *reverse_listint(listint_t **head)
-{
-	listint_t *node = *head, *next, *prev = NULL;
-
-	while (node)
-	{
-		next = node->next;
-		node->next = prev;
-		prev = node;
-		node = next;
-	}
-
-	*head = prev;
-	return (*head);
-}
 int is_palindrome(listint_t **head)
 {
-	listint_t *tmp, *rev, *mid;
-	size_t size = 0, i;
+  listint_t *nhead, *tort, *hare, *ptort;
+  listint_t *cut = NULL, *half, *it1, *it2;
 
-	if (*head == NULL || (*head)->next == NULL)
-		return (1);
+  if (!head || !*head)
+    return (1);
 
-	tmp = *head;
-	while (tmp)
+  nhead = *head;
+  if (nhead->next != NULL)
+    {
+      for (hare = nhead, tort = nhead; hare != NULL && hare->next != NULL;
+	   ptort = tort, tort = tort->next)
+	hare = hare->next->next;
+      if (hare != NULL)
 	{
-		size++;
-		tmp = tmp->next;
+	  cut = tort;
+	  tort = tort->next;
 	}
-
-	tmp = *head;
-	for (i = 0; i < (size / 2) - 1; i++)
-		tmp = tmp->next;
-
-	if ((size % 2) == 0 && tmp->n != tmp->next->n)
-		return (0);
-
-	tmp = tmp->next->next;
-	rev = reverse_listint(&tmp);
-	mid = rev;
-
-	tmp = *head;
-	while (rev)
+      ptort->next = NULL;
+      half = tort;
+      it1 = reverse_listint(&half);
+      for (it2 = *head; it2; it1 = it1->next, it2 = it2->next)
 	{
-		if (tmp->n != rev->n)
-			return (0);
-		tmp = tmp->next;
-		rev = rev->next;
+	  if (it2->n != it1->n)
+	    return (0);
 	}
-	reverse_listint(&mid);
+      if (cut == NULL)
+	ptort->next = half;
+      else
+	{
+	  ptort->next = cut;
+	  cut->next = half;
+	}
+    }
 
-	return (1);
+  return (1);
+}
+
+/**
+ * reverse_listint - Reverses a linked list in pladce
+ * @head: Pointer to a pointer pointing to the first item in the list
+ *
+ * Return: The new head of the reversed list
+ */
+listint_t *reverse_listint(listint_t **head)
+{
+  listint_t *next = NULL, *prev = NULL;
+
+  if (!head || !*head)
+    return (NULL);
+
+  while ((*head)->next)
+    {
+      next = (*head)->next;
+
+      (*head)->next = prev;
+
+      prev = *head;
+
+      *head = next;
+    }
+
+  (*head)->next = prev;
+
+  return (*head);
 }
