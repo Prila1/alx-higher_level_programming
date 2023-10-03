@@ -1,74 +1,80 @@
 #!/usr/bin/python3
-"""Rectangle module.
-
-This module contains a class that defines a rectangle.
-
+"""
+Defines a class Rectangle with private attribute width and height,
+public area and perimeter methods, and allows printing #'s
 """
 
 
-class Rectangle():
-    """Defines a rectangle."""
-
+class Rectangle:
+    """
+    Defines class rectangle with private attribute width and height
+    Note:
+        Area = width * height
+        Perimeter = 2*(width + height)
+    Args:
+        width (int): width
+        height (int): height
+    Functions:
+        __init__(self, width, height)
+        width(self)
+        width(self, value)
+        height(self)
+        height(self, value)
+        area(self)
+        perimeter(self)
+        __str__(self)
+        __repr__(self)
+    """
     def __init__(self, width=0, height=0):
-        """Sets the necessary attributes for the Rectangle object.
-
-        Args:
-            width (int): the width of the rectangle.
-            height (int): the height of the rectangle.
-        """
+        """ Initialize rectangles """
         self.width = width
         self.height = height
 
-    def __str__(self):
-        """Sets the print behavior of the Rectangle object."""
-        rectangle = ""
-
-        if self.__width > 0 and self.__height > 0:
-            for y in range(self.__height):
-                rectangle += '#' * self.__width + '\n'
-
-        return rectangle[:-1]
-
-    def __repr__(self):
-        """Sets the repr behavior of the Rectangle object."""
-        return "Rectangle({:d}, {:d})".format(self.__width, self.__height)
-
     @property
     def width(self):
-        """Get or set the width of the rectangle."""
+        """ Getter returns width """
         return self.__width
 
     @width.setter
     def width(self, value):
-        if type(value) is int:
-            if value >= 0:
-                self.__width = value
-            else:
-                raise ValueError("width must be >= 0")
-        else:
+        """ Setter sets width if int > 0 """
+        if not isinstance(value, int):
             raise TypeError("width must be an integer")
+        if value < 0:
+            raise ValueError("width must be >= 0")
+        self.__width = value
 
     @property
     def height(self):
-        """Get or set the height of the rectangle."""
+        """ Getter returns height """
         return self.__height
 
     @height.setter
     def height(self, value):
-        if type(value) is int:
-            if value >= 0:
-                self.__height = value
-            else:
-                raise ValueError("height must be >= 0")
-        else:
+        """ Setter sets height if int > 0 """
+        if not isinstance(value, int):
             raise TypeError("height must be an integer")
+        if value < 0:
+            raise ValueError("height must be >= 0")
+        self.__height = value
 
     def area(self):
-        """Returns the current rectangle area."""
+        """ Return width * height """
         return self.__width * self.__height
 
     def perimeter(self):
-        """Returns the current rectangle perimeter."""
-        if self.__width is 0 or self.__height is 0:
+        """ Return 2*(width + height) (or return 0 if width or height is 0)"""
+        if self.__width == 0 or self.__height == 0:
             return 0
-        return self.__width * 2 + self.__height * 2
+        return 2 * (self.__width + self.height)
+
+    def __str__(self):
+        """ Prints rectangle with #'s """
+        if self.__width == 0 or self.__height == 0:
+            return ""
+        rect = "\n".join(["#" * self.__width for rows in range(self.__height)])
+        return rect
+
+    def __repr__(self):
+        """ String representation to recreate new instance """
+        return "Rectangle({:d}, {:d})".format(self.width, self.height)
