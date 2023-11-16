@@ -1,4 +1,4 @@
-   -- Results must be sorted in ascending order by tv_shows.title
+-- Results must be sorted in ascending order by tv_shows.title
    -- and tv_show_genres.genre_id
    -- The database name will be passed as an argument of the mysql command
 
