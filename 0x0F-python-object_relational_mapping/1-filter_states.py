@@ -1,26 +1,28 @@
 #!/usr/bin/python3
 """
-    lists all states with a name starting with N
-    (upper N) from the database hbtn_0e_0_usa
+A module for database connectivity. This a just a minor script.
 """
 
-
 import MySQLdb
-from sys import argv
-
+import sys
 
 if __name__ == "__main__":
+    args = sys.argv[1:]
+    mysql_user, mysql_pass, db_name = args
     db = MySQLdb.connect(
         host="localhost",
-        port=3306, user=argv[1],
-        passwd=argv[2],
-        db=argv[3])
-    cur = db.cursor()
-    cur.execute("""SELECT id, name FROM states WHERE
-         name COLLATE latin1_general_cs LIKE
-         'N%' ORDER BY id ASC;""")
-    rows = cur.fetchall()
+        user=mysql_user,
+        password=mysql_pass,
+        port=3306,
+        database=db_name,
+    )
+    db.query(
+        """
+        SELECT * FROM states WHERE name LIKE BINARY 'N%' ORDER BY id
+    """
+    )
+
+    rows = db.store_result().fetch_row(maxrows=0)
+
     for row in rows:
         print(row)
-    cur.close()
-    db.close()
