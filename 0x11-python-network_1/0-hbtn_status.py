@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Fetches a link and prints the response"""
+
+"""Fetches a link and prints out the response"""
+
 if __name__ == '__main__':
     import urllib.request
 
